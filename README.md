@@ -183,7 +183,7 @@ docker exec -it vault-server1 vault operator init
 ```
 This will generate unseal keys and a root token. Save them securely.
 
-## Step 4: Unseal Vault on All Nodes
+## Step 4: Unseal Vault on All Nodes by using at least 3 unseal keys
 Unseal vault-server1
 ```
 docker exec -it vault-server1 vault operator unseal <UNSEAL_KEY>
@@ -204,8 +204,24 @@ docker exec -it vault-server3 vault operator raft join http://vault-server1:8200
 ## Step 6: Verify the Cluster
 ```
 docker exec -it vault-server1 vault operator raft list-peers
+
+Node     Address               State       Voter
+----     -------               -----       -----
+node1    vault-server1:8201    leader      true
+node2    vault-server2:8201    follower    true
+node3    vault-server3:8201    follower    false
 ```
 You should see three nodes in the cluster.
+
+Create KV secrets in vault-server1 and check in vault-server2 and vault-server3
+
+We can see that changes are synchronizing across vault servers.
+
+vault-server1
+
+vault-server2
+
+vault-server3
 
 ## Conclusion
 
