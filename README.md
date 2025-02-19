@@ -218,7 +218,7 @@ Create KV secrets in vault-server1 and check in vault-server2 and vault-server3
 We can see that changes are synchronizing across vault servers.
 
 vault-server1
-
+![Alt text](imgs/vault-server1)
 vault-server2
 
 vault-server3
