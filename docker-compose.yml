@@ -1,0 +1,65 @@
+name: my-vault-cluster
+
+services:
+  vault-server1:
+    image: hashicorp/vault:1.17
+    hostname: vault-server1
+    container_name: vault-server1
+    ports:
+      - "8200:8200"
+    cap_add:
+      - IPC_LOCK
+    networks:
+      - vault-cluster-network
+    environment:
+      - VAULT_ADDR=http://0.0.0.0:8200
+    volumes:
+      - ./vault-server1/config:/vault/config
+      - vault1-filestorage:/vault/file
+      - ./vault-server1/logs:/vault/logs
+    entrypoint: vault server -config=/vault/config/config.hcl
+
+  vault-server2:
+    image: hashicorp/vault:1.17
+    hostname: vault-server2
+    container_name: vault-server2
+    ports:
+      - "8202:8200"
+    cap_add:
+      - IPC_LOCK
+    networks:
+      - vault-cluster-network
+    environment:
+      - VAULT_ADDR=http://0.0.0.0:8200
+    volumes:
+      - ./vault-server2/config:/vault/config
+      - vault2-filestorage:/vault/file
+      - ./vault-server2/logs:/vault/logs
+    entrypoint: vault server -config=/vault/config/config.hcl
+
+  vault-server3:
+    image: hashicorp/vault:1.17
+    hostname: vault-server3
+    container_name: vault-server3
+    ports:
+      - "8204:8200"
+    cap_add:
+      - IPC_LOCK
+    networks:
+      - vault-cluster-network
+    environment:
+      - VAULT_ADDR=http://0.0.0.0:8200
+    volumes:
+      - ./vault-server3/config:/vault/config
+      - vault3-filestorage:/vault/file
+      - ./vault-server3/logs:/vault/logs
+    entrypoint: vault server -config=/vault/config/config.hcl
+
+networks:
+  vault-cluster-network:
+    driver: bridge
+
+volumes:
+  vault1-filestorage:
+  vault2-filestorage:
+  vault3-filestorage:
