@@ -14,6 +14,8 @@ Each node is configured to use RAFT storage and runs in a Docker network to form
 
 ---
 
+## Directory Structure for the Project
+
 ```
 vault-cluster-by-docker/
 ├── docker-compose.yml
